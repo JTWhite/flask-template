@@ -1,8 +1,21 @@
 import os
+import platform
 import importlib
 from flask import Flask, Blueprint
 
 class FlaskUtils:
+    """ Flask utilities, for bootstrapping flask projects"""
+    
+    @classmethod
+    def path_to_name(cls, path: str) -> str:
+        """Converts a path to a module name."""
+        return '.'.join(path.strip('\\').split('\\')) if cls.is_windows else '.'.join(path.strip('/').split('/'))
+
+    @staticmethod
+    @property
+    def is_windows() -> bool:
+        return platform.system() == 'Windows'
+
     @staticmethod
     def is_dunder(name: str) -> bool:
         return name.startswith('__') and name.endswith('__')
